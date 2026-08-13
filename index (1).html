@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karin Meyer — Talento Junior Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F6F2;
+    --bg-alt:#EBF0EA;
+    --ink:#16211E;
+    --ink-soft:#4B5750;
+    --teal:#1F6F5C;
+    --teal-deep:#153F35;
+    --amber:#D9A24C;
+    --line:#D6DED5;
+    --card:#FFFFFF;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+  }
+  .bg-grid{
+    position:fixed; inset:0; z-index:-1;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity:0.35;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; margin:0; letter-spacing:-0.01em;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--teal-deep); font-weight:500;
+  }
+  a{color:var(--teal-deep);}
+
+  /* ---------- Formula bar (signature element) ---------- */
+  .formula-bar{
+    margin:28px auto 0; max-width:920px;
+    display:flex; align-items:center; gap:10px;
+    background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:10px 16px; font-family:'IBM Plex Mono', monospace; font-size:13.5px;
+    color:var(--ink-soft); box-shadow:0 1px 0 rgba(22,33,30,0.03);
+  }
+  .formula-bar .fx{
+    color:var(--teal); font-weight:600; font-style:italic; flex-shrink:0;
+  }
+  .formula-bar .divider{width:1px; height:16px; background:var(--line); flex-shrink:0;}
+  .formula-bar .expr{white-space:nowrap; overflow:hidden; border-right:2px solid var(--amber);
+    animation: type 2.6s steps(46,end) 1 both, blink 0.85s step-end infinite;
+    max-width:100%;
+  }
+  @keyframes type{ from{width:0;} to{width:46ch;} }
+  @keyframes blink{ 50%{border-color:transparent;} }
+  @media (prefers-reduced-motion: reduce){
+    .formula-bar .expr{ animation:none; width:46ch; border-right-color:transparent; }
+  }
+
+  /* ---------- Hero ---------- */
+  header.hero{padding:56px 0 40px;}
+  header.hero h1{font-size:clamp(34px,5.6vw,54px); font-weight:700; color:var(--ink);}
+  header.hero .role{
+    margin-top:8px; font-size:19px; color:var(--teal-deep); font-weight:500;
+  }
+  header.hero .intro{margin-top:18px; max-width:60ch; color:var(--ink-soft); font-size:16px;}
+  .contact-row{margin-top:26px; display:flex; flex-wrap:wrap; gap:10px;}
+  .contact-row a{
+    font-family:'IBM Plex Mono', monospace; font-size:13px;
+    border:1px solid var(--line); background:var(--card);
+    padding:8px 14px; border-radius:100px; text-decoration:none; color:var(--ink);
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .contact-row a:hover, .contact-row a:focus-visible{border-color:var(--teal); color:var(--teal-deep);}
+
+  /* ---------- Sections ---------- */
+  section{padding:44px 0;}
+  section.divider-top{border-top:1px solid var(--line);}
+  .section-head{margin-bottom:24px;}
+  .section-head h2{font-size:26px; margin-top:6px;}
+
+  /* ---------- Stack tags ---------- */
+  .stack{display:flex; flex-wrap:wrap; gap:10px;}
+  .stack span{
+    font-family:'IBM Plex Mono', monospace; font-size:13px;
+    background:var(--bg-alt); border:1px solid var(--line); color:var(--teal-deep);
+    padding:7px 13px; border-radius:6px;
+  }
+
+  /* ---------- Case study ---------- */
+  .case-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:32px; box-shadow:0 1px 2px rgba(22,33,30,0.04);
+  }
+  .case-title{font-size:21px; margin-bottom:4px;}
+  .case-sub{color:var(--ink-soft); font-size:14.5px; margin-bottom:26px;}
+  .case-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:22px 28px;
+  }
+  .case-cell .label{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--amber); font-weight:600; margin-bottom:6px;
+  }
+  .case-cell p{margin:0; font-size:14.5px; color:var(--ink);}
+  .case-cell.full{grid-column:1 / -1;}
+  .metric-strip{
+    margin-top:26px; padding-top:22px; border-top:1px dashed var(--line);
+    display:flex; gap:28px; flex-wrap:wrap;
+  }
+  .metric{font-family:'IBM Plex Mono', monospace;}
+  .metric b{display:block; font-size:20px; color:var(--teal-deep);}
+  .metric span{font-size:12px; color:var(--ink-soft);}
+
+  /* ---------- Other projects ---------- */
+  .projects-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px;}
+  .project-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px; transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .project-card:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(22,33,30,0.07);}
+  .project-card .icon{
+    width:34px; height:34px; border-radius:8px; background:var(--bg-alt);
+    display:flex; align-items:center; justify-content:center; margin-bottom:14px;
+    font-family:'IBM Plex Mono', monospace; color:var(--teal); font-weight:600; font-size:14px;
+  }
+  .project-card h3{font-size:16px; margin-bottom:8px;}
+  .project-card p{font-size:13.5px; color:var(--ink-soft); margin:0 0 12px;}
+  .project-card .tags{display:flex; flex-wrap:wrap; gap:6px;}
+  .project-card .tags span{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--teal-deep);
+    background:var(--bg-alt); padding:3px 8px; border-radius:4px;
+  }
+
+  /* ---------- Company research note ---------- */
+  .target-note{
+    background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px 24px; font-size:14px; color:var(--ink-soft);
+  }
+  .target-note b{color:var(--ink);}
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:48px 0 60px; border-top:1px solid var(--line); margin-top:20px;
+    font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--ink-soft);
+  }
+  footer .foot-row{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} }
+
+  @media (max-width:760px){
+    .case-grid{grid-template-columns:1fr;}
+    .projects-grid{grid-template-columns:1fr;}
+    .formula-bar{margin-left:16px; margin-right:16px;}
+  }
+</style>
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<div class="formula-bar" aria-hidden="true">
+  <span class="fx">fx</span>
+  <span class="divider"></span>
+  <span class="expr">=BUSCARV("Karin Meyer"; potencial; oportunidad)</span>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Portafolio técnico</p>
+    <h1>Karin Meyer</h1>
+    <p class="role">Talento Junior Tech — Datos, BI &amp; Automatización</p>
+    <p class="intro">
+      Perfil en formación técnica intensiva, enfocado en análisis de datos, business intelligence
+      y automatización con Python. Aprendo rápido bajo presión, uso la IA como copiloto de trabajo
+      y disfruto convertir datos desordenados en decisiones claras.
+    </p>
+    <div class="contact-row">
+      <a href="mailto:temealxp88@gmail.com">✉ temealxp88@gmail.com</a>
+      <a href="https://www.linkedin.com/in/karin-meyer-alava-9a327a136/" target="_blank" rel="noopener">in/ karin-meyer-alava</a>
+      <a href="https://github.com/Karin-bot" target="_blank" rel="noopener">gh/ Karin-bot</a>
+    </div>
+  </header>
+
+  <section class="reveal">
+    <div class="section-head">
+      <p class="eyebrow">Stack</p>
+      <h2>Herramientas y tecnologías</h2>
+    </div>
+    <div class="stack">
+      <span>Power BI</span><span>Excel</span><span>Power Query</span><span>Python</span>
+      <span>pandas</span><span>SQL</span><span>Docker</span><span>Kali Linux</span>
+      <span>HTML / JS</span><span>Metodologías ágiles</span>
+    </div>
+  </section>
+
+  <section id="caso-de-estudio" class="divider-top reveal">
+    <div class="section-head">
+      <p class="eyebrow">Caso de estudio</p>
+      <h2>Dashboard de ventas con Power BI + IA</h2>
+    </div>
+    <div class="case-card">
+      <p class="case-title">Análisis exploratorio de ventas por tienda, producto, vendedor y país</p>
+      <p class="case-sub">Taller de Daxus LATAM — Power BI aplicado con inteligencia artificial · Excel · Power BI · Power Query</p>
+
+      <div class="case-grid">
+        <div class="case-cell">
+          <p class="label">Desafío</p>
+          <p>El ritmo del taller fue muy acelerado respecto a mi experiencia previa con estas herramientas, en especial con Power Query, cuya lógica de consultas no había explorado antes.</p>
+        </div>
+        <div class="case-cell">
+          <p class="label">Solución</p>
+          <p>Usé Gemini como apoyo puntual para entender la lógica de las consultas y destrabar pasos específicos, revisando cada resultado antes de avanzar para detectar y corregir errores a tiempo.</p>
+        </div>
+        <div class="case-cell">
+          <p class="label">Aprendizajes clave</p>
+          <p>Transformación de datos con Power Query, construcción de visualizaciones interactivas y análisis exploratorio segmentado.</p>
+        </div>
+        <div class="case-cell">
+          <p class="label">Habilidades aplicadas</p>
+          <p>Excel avanzado, Power BI, Power Query, pensamiento analítico y uso estratégico de IA como copiloto de aprendizaje.</p>
+        </div>
+        <div class="case-cell full">
+          <p class="label">Por qué forma parte de mi portafolio</p>
+          <p>Combina herramientas de negocio (BI) con inteligencia artificial aplicada, y refleja mi capacidad de aprender bajo presión y resolver de forma autónoma en un entorno de trabajo exigente.</p>
+        </div>
+      </div>
+
+      <div class="metric-strip">
+        <div class="metric"><b>4</b><span>dimensiones de análisis</span></div>
+        <div class="metric"><b>3</b><span>herramientas integradas</span></div>
+        <div class="metric"><b>↓ tiempo</b><span>vs. revisión manual planilla por planilla</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="divider-top reveal">
+    <div class="section-head">
+      <p class="eyebrow">Más proyectos</p>
+      <h2>Otros trabajos del curso</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="icon">PDF</div>
+        <h3>Reportes en PDF automatizados</h3>
+        <p>Generación programática de documentos PDF estructurando y volcando datos con Python.</p>
+        <div class="tags"><span>Python</span><span>pandas</span></div>
+      </div>
+      <div class="project-card">
+        <div class="icon">✉</div>
+        <h3>Envío de correos automatizado</h3>
+        <p>Script en Python para automatizar el envío de correos electrónicos de forma programada.</p>
+        <div class="tags"><span>Python</span><span>Automatización</span></div>
+      </div>
+      <div class="project-card">
+        <div class="icon">◉</div>
+        <h3>Visualización por webcam</h3>
+        <p>Captura y procesamiento de video en tiempo real desde una cámara web.</p>
+        <div class="tags"><span>Python</span><span>Visión por computadora</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="divider-top reveal">
+    <div class="section-head">
+      <p class="eyebrow">Objetivo profesional</p>
+      <h2>Empresa objetivo: Globant</h2>
+    </div>
+    <div class="target-note">
+      Busco iniciar mi carrera en una empresa que combine <b>ingeniería de software con inteligencia artificial aplicada</b>,
+      trabajando en equipos multidisciplinarios ("Pods") orientados a resultados. Mi objetivo a corto plazo es aportar
+      en proyectos de análisis de datos y automatización, y crecer hacia desafíos técnicos cada vez más complejos.
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-row">
+      <span>Karin Meyer — Talento Junior Tech</span>
+      <span>Última actualización: 2026</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+</script>
+</body>
+</html>
